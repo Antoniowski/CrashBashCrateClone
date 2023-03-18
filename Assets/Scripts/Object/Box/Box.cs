@@ -55,12 +55,6 @@ public class Box : MonoBehaviour
         {
             ThrownBoxBeheaviour(other);
         }
-        else
-        {
-            Debug.Log("Static");
-            TouchedBoxBeheaviour(other);
-        }
-
     }
 
     private void AttackedBoxBeheaviour(Collision other)
