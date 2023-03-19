@@ -18,7 +18,8 @@ public class BotIdleState : State
 
     public override State RunCurrentState()
     {
-        if(timer < 2f)
+        int scelta = Mathf.RoundToInt(Random.Range(1,2.5f));
+        if(timer < scelta)
         {
             timer += Time.deltaTime;
             return this;

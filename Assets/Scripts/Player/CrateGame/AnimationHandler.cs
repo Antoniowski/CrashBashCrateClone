@@ -46,6 +46,11 @@ public class AnimationHandler : MonoBehaviour
 
     }
 
+    public void PlaySimpleAnimation(string targetAnim)
+    {
+        animator.CrossFade(targetAnim, 0.2f);
+    }
+
     public void PlayAnimationTarget(string targetAnim, bool isInteracting)
     {
         animator.applyRootMotion = isInteracting;

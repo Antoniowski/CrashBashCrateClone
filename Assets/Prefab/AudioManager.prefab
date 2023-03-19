@@ -71,6 +71,12 @@ MonoBehaviour:
     loop: 1
     audioClip: {fileID: 8300000, guid: 632ef2e8cefc77b4f832258356063884, type: 3}
     audioSource: {fileID: 0}
+  - name: Boing
+    volume: 1
+    pitch: 1
+    loop: 0
+    audioClip: {fileID: 8300000, guid: 009ad7c9f8acc0f42b762aeca95ce021, type: 3}
+    audioSource: {fileID: 0}
   musicVolume: 0
   SFXVolume: 0
 --- !u!1 &1688365663684009863
