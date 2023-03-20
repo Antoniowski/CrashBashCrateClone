@@ -16,7 +16,8 @@ public static class LoadingHandler
     {
         LoadingScene,
         MainMenu,
-        CharacterSelection
+        CharacterSelection,
+        CasseScene
     };
 
     //Le action sono necessarie per la realizzazione di callback

@@ -77,16 +77,16 @@ public class CharacterSelectionHandler : MonoBehaviour
         switch(selectionIndex)
         {
             case 1:
-                matchManager.player01 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character, prefabManager.GetCharacterController(true, character));
+                matchManager.player01 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character,prefabManager.GetModel(character) ,prefabManager.GetCharacterController(true, character));
                 break;
             case 2:
-                matchManager.player02 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character,prefabManager.GetCharacterController(true, character));
+                matchManager.player02 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character, prefabManager.GetModel(character) ,prefabManager.GetCharacterController(true, character));
                 break;
             case 3:
-                matchManager.player03 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character,prefabManager.GetCharacterController(true, character));
+                matchManager.player03 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character, prefabManager.GetModel(character) ,prefabManager.GetCharacterController(true, character));
                 break;
             case 4:
-                matchManager.player04 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character,prefabManager.GetCharacterController(true, character));
+                matchManager.player04 = new PlayerInfo(selectionIndex, false, PlayerInfo.ControllType.Gamepad, character, prefabManager.GetModel(character) ,prefabManager.GetCharacterController(true, character));
                 break;
             default:
                 Debug.LogWarning("No player selected");
@@ -103,13 +103,9 @@ public class CharacterSelectionHandler : MonoBehaviour
         //RANDOM CPU PLAYER
         GenerateCPUPlayer();
         
-        //NO! CRASHA IL MONDO
         StartCoroutine(AppearAnimation());
 
         Debug.Log("P1:" + matchManager.player01.character + " P2:" + matchManager.player02.character + " P3:" + matchManager.player03.character + "P4:" + matchManager.player04.character);
-
-        //StartCoroutine(DelayLoading());
-        //LoadingHandler.Load(LoadingHandler.Scene.LoadingScene);
     }
 
     void GenerateCPUPlayer()
@@ -132,34 +128,26 @@ public class CharacterSelectionHandler : MonoBehaviour
             {
                 int randomInt = rnd.Next(0, characters.Length);
                 string character = characters[randomInt];
-                matchManager.player02 = new PlayerInfo(2, true, PlayerInfo.ControllType.Keyboard, character, prefabManager.GetCharacterController(false, character));
+                matchManager.player02 = new PlayerInfo(2, true, PlayerInfo.ControllType.Keyboard, character, prefabManager.GetModel(character) , prefabManager.GetCharacterController(false, character));
                 
             }
             else if(matchManager.player03.ID == 0)
             {
                 int randomInt = rnd.Next(0, characters.Length);
                 string character = characters[randomInt];
-                matchManager.player03 = new PlayerInfo(3, true, PlayerInfo.ControllType.Keyboard, character, prefabManager.GetCharacterController(false, character));    
+                matchManager.player03 = new PlayerInfo(3, true, PlayerInfo.ControllType.Keyboard, character, prefabManager.GetModel(character) , prefabManager.GetCharacterController(false, character));    
             }
             else if(matchManager.player04.ID == 0)
             {
                 int randomInt = rnd.Next(0, characters.Length);
                 string character = characters[randomInt];
-                matchManager.player04 = new PlayerInfo(4, true, PlayerInfo.ControllType.Keyboard, character, prefabManager.GetCharacterController(false, character));    
+                matchManager.player04 = new PlayerInfo(4, true, PlayerInfo.ControllType.Keyboard, character,  prefabManager.GetModel(character) ,prefabManager.GetCharacterController(false, character));    
             }
             playerLeft -= 1;
         }
         
     }
 
-    /*void SetUPCPU(System.Random rnd, Character[] characters)
-    {
-        
-        Character randomChar = (Character)characters.GetValue(rnd.Next(characters.Length));
-        matchManager.player02 = new PlayerInfo(2, true, PlayerInfo.ControllType.Keyboard, randomChar.ToString());
-    }*/
-
-    //SUONI
     public void PlaySelectButtonSound(bool isKong)
     {
         if(isKong)
@@ -249,6 +237,6 @@ public class CharacterSelectionHandler : MonoBehaviour
     IEnumerator DelayLoading()
     {
         yield return new WaitForSeconds(4f);
-        LoadingHandler.Load(LoadingHandler.Scene.LoadingScene);
+        LoadingHandler.Load(LoadingHandler.Scene.CasseScene);
     }
 }

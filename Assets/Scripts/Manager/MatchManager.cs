@@ -14,7 +14,7 @@ public class MatchManager : MonoBehaviour
     [HideInInspector] public bool startGame = false;
     bool alreadyStarted = false;
 
-    public float timer = 60;
+    public float timer = 90;
 
 
     void Update()
@@ -40,6 +40,8 @@ public class MatchManager : MonoBehaviour
             timer -= delta;
             yield return null;
         }
+
+        //gestisci fine partita
     }
 
 }

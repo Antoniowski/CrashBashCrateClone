@@ -123,10 +123,10 @@ public class Box : MonoBehaviour
             Skip: /*Nothing*/;
                 
         }
-        Explosion(radius);
+        StartCoroutine(Explosion(radius));
     }
 
-    private void Explosion(float radius)
+    private IEnumerator Explosion(float radius)
     {
         //VFX esplosione
         if(explosion != null) Instantiate(explosion, transform.position, Quaternion.identity);
@@ -152,6 +152,8 @@ public class Box : MonoBehaviour
         gameObject.SetActive(false);
         if(!isActive) //Questo serve per evitare di interrompere delle azioni
             Destroy(gameObject);
+
+        yield return null;
     }
 
     public IEnumerator Move(Vector3 direction)
