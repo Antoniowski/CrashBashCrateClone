@@ -59,6 +59,13 @@ public class AnimationHandler : MonoBehaviour
         
     }
 
+    public void PlayAnimationTargetNO_INTERACTING(string targetAnim)
+    {
+        animator.applyRootMotion = true;
+        animator.SetBool("IsInteracting", false);
+        animator.CrossFade(targetAnim, 0.2f);
+    }
+
     public void PlayAnimationTarget(Animation targetAnim, bool isInteracting)
     {
         animator.applyRootMotion = isInteracting;

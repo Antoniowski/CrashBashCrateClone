@@ -8,6 +8,10 @@ public class BotManager : GenericCharacterManager
     BotMovementManager botMovementManager;
     Animator animator;
     AnimationHandler animationHandler;
+    BotStateManager botStateManager;
+
+    [SerializeField] State stunState;
+    [SerializeField] State deathState;
 
     public float grabRadius;
     public int boxDetectionRadius;
@@ -22,6 +26,7 @@ public class BotManager : GenericCharacterManager
         botMovementManager = GetComponent<BotMovementManager>();  
         animator = GetComponentInChildren<Animator>();  
         animationHandler = GetComponent<AnimationHandler>();
+        botStateManager = GetComponentInChildren<BotStateManager>();
         animationHandler.Init();
     }
 
@@ -34,7 +39,6 @@ public class BotManager : GenericCharacterManager
     {
         float delta = Time.deltaTime;
         isPerformingAction = animator.GetBool("IsInteracting");
-        //HandleCurrentAction(delta);
     }
 
 
@@ -42,7 +46,15 @@ public class BotManager : GenericCharacterManager
     {
         if(isStunned)
             return;
-            
+
+        if(hasBox)
+        {
+            hasBox = false;
+            Box box = transform.Find("GrabPoint").gameObject.GetComponentInChildren<Box>();
+            animator.CrossFade("Grab Empty",0.2f);
+            box.Explode(box.explosionRadius);
+        }
+
         animationHandler.PlayAnimationTarget("GetHit", true);
         botMovementManager.ResetVelocity();
         isStunned = true;
@@ -51,13 +63,14 @@ public class BotManager : GenericCharacterManager
         {
             health = 0;
             animationHandler.PlayAnimationTarget("Death", true);
-            //Handle Death
+            botStateManager.SwitchToNextState(deathState);
         }
     }
 
     public void StartStunnedAnimation()
     {
         animationHandler.PlayAnimationTarget("Stunned", true);
+        botStateManager.SwitchToNextState(stunState);
         StartCoroutine(EndStunnedAnimation());
     }
 

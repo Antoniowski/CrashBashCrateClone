@@ -4,21 +4,35 @@ using UnityEngine;
 
 public class BotIdleState : State
 {
+    #region  REFERENCES
+    BotAttackManager attackManager;
+    BotManager botManager;
+    #endregion
+
     [SerializeField] State attackState;
     [SerializeField] State searchBoxState;
+
+    [Header("Idle Duration")]
+    [SerializeField] float minIdleDuration = 1;
+    [SerializeField] float maxIdleDuration = 1.75f;
+
     public bool enemyInRange = false;
     float timer;
-    BotAttackManager attackManager;
+
 
 
     void Awake()
     {
         attackManager = transform.parent.gameObject.GetComponentInParent<BotAttackManager>();
+        botManager = GetComponentInParent<BotManager>();
+        enemyInRange = false;
+        timer = 0;
     }
 
     public override State RunCurrentState()
     {
-        int scelta = Mathf.RoundToInt(Random.Range(1,2.5f));
+        botManager.hasBox = false;
+        float scelta = Random.Range(minIdleDuration, maxIdleDuration);
         if(timer < scelta)
         {
             timer += Time.deltaTime;

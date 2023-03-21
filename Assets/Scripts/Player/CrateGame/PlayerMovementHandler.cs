@@ -11,9 +11,9 @@ public class PlayerMovementHandler : MonoBehaviour
     PlayerManager playerManager;
 
     [SerializeField] AnimationCurve playerSpeed;
-    Vector2 velocity;
-    float verticalVelocity;
-    float movementTimer;
+    public Vector2 velocity;
+    public float verticalVelocity;
+    public float movementTimer;
 
     float distToGround;
     CapsuleCollider colliderRiferimento;
@@ -45,29 +45,14 @@ public class PlayerMovementHandler : MonoBehaviour
         playerManager.isGrounded = IsGrounded();
         float delta = Time.deltaTime;
         MovePlayer(delta);
-        //MoveInAir(delta);
-        
-        //characterController.Move(new Vector3(velocity.x, verticalVelocity, velocity.y)*delta);
-
     }
 
     void MovePlayer(float delta){
         ApplyGravity(delta);
         
-        if(playerInputHandler.inputMagnitude != 0)
+        if(playerInputHandler.inputMagnitude != 0 && !playerInputHandler.isInteracting)
         {
             movementTimer += delta;
-            if(!playerManager.isGrounded)
-            {
-                
-                velocity =  new Vector2(playerInputHandler.horizontal, playerInputHandler.vertical) * playerSpeed.Evaluate(movementTimer) * 3f;
-                HandlePlayerOrientation(delta);
-                goto Skip;
-            }
-
-            if(playerInputHandler.isInteracting)
-                goto Skip;
-
             velocity =  new Vector2(playerInputHandler.horizontal, playerInputHandler.vertical) * playerSpeed.Evaluate(movementTimer) ;
             HandlePlayerOrientation(delta);
         }
@@ -77,7 +62,6 @@ public class PlayerMovementHandler : MonoBehaviour
             velocity = Vector2.MoveTowards(velocity, Vector2.zero, FRICTION);
         }
 
-        Skip:
         //ATTIVA LE ANIMAZIONI DI CAMMINATA
         if(!playerInputHandler.isInteracting) animationHandler.UpdateAnimatorMovementValues(playerInputHandler.inputMagnitude,0);
         characterController.Move(new Vector3(velocity.x, verticalVelocity, velocity.y)*delta);
@@ -85,7 +69,7 @@ public class PlayerMovementHandler : MonoBehaviour
 
     public void Jump()
     {
-        animationHandler.PlayAnimationTarget("Jump", true);
+        animationHandler.PlayAnimationTargetNO_INTERACTING("Jump");
         verticalVelocity = JUMP_POWER;
     }
 

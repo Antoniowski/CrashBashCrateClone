@@ -36,6 +36,14 @@ public class PlayerManager : GenericCharacterManager
     {
         if(isStunned)
             return;
+
+        if(hasBox)
+        {
+            hasBox = false;
+            Box box = transform.Find("GrabPoint").gameObject.GetComponentInChildren<Box>();
+            animator.CrossFade("Grab Empty",0.2f);
+            box.Explode(box.explosionRadius);
+        }
             
         animationHandler.PlayAnimationTarget("GetHit", true);
         playerMovementHandler.ResetVelocity();
@@ -58,7 +66,7 @@ public class PlayerManager : GenericCharacterManager
     private IEnumerator EndStunnedAnimation()
     {
         yield return new WaitForSeconds(1.5f);
-        animationHandler.PlayAnimationTarget("Empty", false);
+        animationHandler.PlayAnimationTargetNO_INTERACTING("Empty");
         isStunned = false;
     }
 

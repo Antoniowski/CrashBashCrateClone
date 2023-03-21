@@ -120,13 +120,7 @@ public class BotMovementManager : MonoBehaviour
         if(botManager.isMoving)
         {
             movementTimer += delta;
-            /*if(!botManager.isGrounded)
-            {
-                velocity =  new Vector2(position.x, position.z).normalized * movementSpeed.Evaluate(movementTimer) * 3f;
-                HandeOrientation(delta, position - transform.position);
-                goto Skip;
-            }*/
-
+            
             if(botManager.isPerformingAction)
             {   
                 movementTimer = 0;

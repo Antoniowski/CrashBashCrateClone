@@ -34,12 +34,12 @@ public class BotAttackManager : MonoBehaviour
         if(botMovementManager.targetCharacter != null)
             return;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, botManager.hasBox == true ? enemyDetectionRadius*30 : enemyDetectionRadius, characterLayerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, botManager.hasBox == true ? enemyDetectionRadius*30 : enemyDetectionRadius, characterLayerMask.value);
         if(colliders.Length > 0)
         {
             for(int i = 0; i<colliders.Length; i++)
             {
-                if(!colliders[i].gameObject.Equals(gameObject.transform.Find("Colliders").gameObject))
+                if(!colliders[i].gameObject.Equals(gameObject))
                 {
                     GameObject enemy = colliders[i].gameObject;
                     idleState.enemyInRange = true;
