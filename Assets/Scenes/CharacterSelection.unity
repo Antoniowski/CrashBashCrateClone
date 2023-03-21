@@ -2347,13 +2347,13 @@ MonoBehaviour:
   - name: Tiny
     playerObject: {fileID: 1577807700366198195, guid: 28b2bdbd21de9b14aa7dc4f19b7561c1,
       type: 3}
-    CPUObject: {fileID: 1839732918617421065, guid: 34d2f2673dd21bd4d8770eaeed0a1424,
+    CPUObject: {fileID: 2232060904790843375, guid: 277fa7cb59756d94cbd3d51119f7ef85,
       type: 3}
     model: {fileID: 8340343152700619445, guid: 5d2c40f473c6400428d5c0b69f113075, type: 3}
   - name: Dingo
     playerObject: {fileID: 1577807700366198195, guid: 28b2bdbd21de9b14aa7dc4f19b7561c1,
       type: 3}
-    CPUObject: {fileID: 1839732918617421065, guid: 34d2f2673dd21bd4d8770eaeed0a1424,
+    CPUObject: {fileID: 2232060904790843375, guid: 277fa7cb59756d94cbd3d51119f7ef85,
       type: 3}
     model: {fileID: 8340343152700619445, guid: 5d2c40f473c6400428d5c0b69f113075, type: 3}
   - name: Cortex
@@ -2371,13 +2371,13 @@ MonoBehaviour:
   - name: Kong
     playerObject: {fileID: 1577807700366198195, guid: 28b2bdbd21de9b14aa7dc4f19b7561c1,
       type: 3}
-    CPUObject: {fileID: 1839732918617421065, guid: 34d2f2673dd21bd4d8770eaeed0a1424,
+    CPUObject: {fileID: 2232060904790843375, guid: 277fa7cb59756d94cbd3d51119f7ef85,
       type: 3}
     model: {fileID: 8340343152700619445, guid: 5d2c40f473c6400428d5c0b69f113075, type: 3}
   - name: Rilla
     playerObject: {fileID: 1577807700366198195, guid: 28b2bdbd21de9b14aa7dc4f19b7561c1,
       type: 3}
-    CPUObject: {fileID: 1839732918617421065, guid: 34d2f2673dd21bd4d8770eaeed0a1424,
+    CPUObject: {fileID: 2232060904790843375, guid: 277fa7cb59756d94cbd3d51119f7ef85,
       type: 3}
     model: {fileID: 8340343152700619445, guid: 5d2c40f473c6400428d5c0b69f113075, type: 3}
 --- !u!4 &995228854

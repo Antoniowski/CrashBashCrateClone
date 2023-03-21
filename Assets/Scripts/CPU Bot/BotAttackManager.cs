@@ -37,12 +37,9 @@ public class BotAttackManager : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, botManager.hasBox == true ? enemyDetectionRadius*30 : enemyDetectionRadius, characterLayerMask);
         if(colliders.Length > 0)
         {
-            if(colliders.Length == 1 && colliders[0].gameObject.Equals(gameObject))
-                return;
-
             for(int i = 0; i<colliders.Length; i++)
             {
-                if(!colliders[i].gameObject.Equals(gameObject))
+                if(!colliders[i].gameObject.Equals(gameObject.transform.Find("Colliders").gameObject))
                 {
                     GameObject enemy = colliders[i].gameObject;
                     idleState.enemyInRange = true;
@@ -50,6 +47,8 @@ public class BotAttackManager : MonoBehaviour
                     enemyDirection = enemy.transform.position - transform.position;
                     return;
                 }
+
+                continue;
                 
             }
         }
@@ -102,7 +101,7 @@ public class BotAttackManager : MonoBehaviour
 
     private void AttackPlayer()
     {
-        Collider[] colliders = Physics.OverlapBox(transform.position + transform.forward*0.6f, new Vector3(0.25f,0.65f, 0.5f), Quaternion.identity, characterLayerMask);
+        Collider[] colliders = Physics.OverlapBox(transform.position + transform.forward*1.6f, new Vector3(0.25f,0.65f, 0.5f), Quaternion.identity, characterLayerMask);
         foreach (Collider c in colliders)
         {
             //Evita di auto-attaccarsi
@@ -114,7 +113,7 @@ public class BotAttackManager : MonoBehaviour
                 PlayerManager character = c.gameObject.GetComponent<PlayerManager>();
                 character.TakeDamage(1);
             }
-            else
+            else if(c.gameObject.tag == "Enemy")
             {
                 BotManager character = c.gameObject.GetComponent<BotManager>();
                 character.TakeDamage(1);

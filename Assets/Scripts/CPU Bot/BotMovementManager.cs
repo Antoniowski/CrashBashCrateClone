@@ -128,7 +128,11 @@ public class BotMovementManager : MonoBehaviour
             }*/
 
             if(botManager.isPerformingAction)
+            {   
+                movementTimer = 0;
                 goto Skip;
+            }
+                
 
             /*velocity =  new Vector2(position.x - transform.position.x, position.z - transform.position.z).normalized * movementSpeed.Evaluate(movementTimer) ;*/
             Vector2 moveVec = Vector2.MoveTowards( new Vector2(transform.position.x, transform.position.z), new Vector2(position.x, position.z), movementSpeed.Evaluate(movementTimer));

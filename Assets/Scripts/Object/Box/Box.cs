@@ -90,7 +90,7 @@ public class Box : MonoBehaviour
                 other.gameObject.GetComponent<PlayerManager>().TakeDamage(damage);
                 break;
             case "Enemy":
-                other.gameObject.GetComponent<BotManager>().TakeDamage(damage);
+                other.gameObject.GetComponentInParent<BotManager>().TakeDamage(damage);
                 break;
             case "Box":
                 other.gameObject.GetComponent<Box>().Explode();
@@ -196,7 +196,8 @@ public class Box : MonoBehaviour
             countdown += 1;
         }
 
-        Explosion(explosionRadius);
+        StartCoroutine(Explosion(explosionRadius));
+        yield return null;
     }
 
     private IEnumerator NitroExplosion()

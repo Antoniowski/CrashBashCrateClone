@@ -18,47 +18,58 @@ public class CrateSceneManager : MonoBehaviour
     [SerializeField] Transform centerRing;
     [SerializeField] GameObject[] boxes;
 
+    float spawnPlane_xDim;
+    float spawnPlane_zDim;
+    float timer;
+
 
     [Header("Match Options")]
     [SerializeField] int maxNumberOfBox = 12;
 
     int numberOfBoxes = 0;
-    List<Vector3> positionTaken = new List<Vector3>();
     [SerializeField] LayerMask boxLayer;
 
-  
+    
 
     public bool mostraComandi = true;
 
     void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        matchManager = GameObject.Find("MatchHandler").GetComponent<MatchManager>();        
+        matchManager = GameObject.Find("MatchHandler").GetComponent<MatchManager>();
+        spawnPlane_xDim = spawnPlane.GetComponent<MeshRenderer>().bounds.size.x/2;
+        spawnPlane_zDim = spawnPlane.GetComponent<MeshRenderer>().bounds.size.z/2;     
     }
     // Start is called before the first frame update
     void Start()
     {
         audioManager.StopAllMusic();
         //Time.timeScale = 0;
-        StartCoroutine(Init());
+        Init();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //StartCoroutine(CheckBoxes());
+        timer += Time.deltaTime;
+        if(timer > 6f)
+        {
+            timer = 0;
+            StartCoroutine(CrateSpawn(false, 0));
+        }
     }
 
-    IEnumerator Init()
+    void Init()
     {
         matchManager.timer = 90;
         mostraComandi = true;
+        //Spawna i giocatori
         StartCoroutine(SpawnPlayers());
-        StartCoroutine(CrateSpawn());
-        yield return null;
+        //Spawna le prime casse
+        StartCoroutine(CrateSpawn(true, 0));
     }
 
-
+//Funziona
     IEnumerator SpawnPlayers()
     {
         GameObject gameObject = Instantiate(matchManager.player01.controller, spawnP1.transform.position, Quaternion.identity) as GameObject;
@@ -67,95 +78,44 @@ public class CrateSceneManager : MonoBehaviour
         GameObject gameObject4 = Instantiate(matchManager.player04.controller, spawnP4.transform.position, Quaternion.identity) as GameObject;
         yield return null;
     }
-
-    IEnumerator CrateSpawn()
+    //Funziona
+    IEnumerator CrateSpawn(bool init, int spawnID)
     {
-        //Ottieni dimensioni del piano
-        float x_dim = spawnPlane.GetComponent<MeshRenderer>().bounds.size.x;
-        float z_dim = spawnPlane.GetComponent<MeshRenderer>().bounds.size.z;
-        x_dim = x_dim/2;
-        z_dim = z_dim/2;
-
-    
-        //while(numberOfBoxes < 8)
-        //{
-            numberOfBoxes += 1;
-            int index = Mathf.RoundToInt(Random.Range(0, boxes.Length));
-            StartCoroutine(SingleSpawn(boxes[index], x_dim, z_dim));
-            yield return null;
-        //}
-
-    }
-
-    IEnumerator SingleSpawn(GameObject box, float x, float z)
-    {
-        //Crea l'oggetto
-        GameObject newBox = Instantiate(box, Vector3.zero, Quaternion.Euler(-90,0,0)) as GameObject;
-
-        
-
         //Randomizza la posizione
-        float random_x = Random.Range(-x, x);
-        float random_z = Random.Range(-z, z);
-        float number = Random.Range(1,1.2f);
+        float random_x = Random.Range(-spawnPlane_xDim, spawnPlane_xDim);
+        float random_z = Random.Range(-spawnPlane_zDim, spawnPlane_zDim);
         random_z = random_x > random_z ? Random.Range(0, random_z) : Random.Range(0, random_x);
 
-        float noise = Mathf.PerlinNoise(random_x, random_z);
+        //Crea nuova posizione
+        //Vector3 newPos = new Vector3(Mathf.RoundToInt(spawnPlane.position.x + random_x*number*noise), 1f, Mathf.RoundToInt(spawnPlane.position.z + random_z*number*noise));
+        Vector3 newPos = new Vector3(spawnPlane.position.x + random_x, 1f, spawnPlane.position.z + random_z);
 
-        //Assegna nuova posizione
-        Vector3 newPos = new Vector3(Mathf.RoundToInt(spawnPlane.position.x + random_x*number*noise), 1f, Mathf.RoundToInt(spawnPlane.position.z + random_z*number*noise));
-        foreach (Vector3 item in positionTaken)
+        //Check se ci sta un'altra scatola
+        if(Physics.OverlapSphere(newPos, 2f, boxLayer.value).Length == 0)
         {
-            if(newPos == item)
-            {
-                Destroy(newBox);
-                int index = Mathf.RoundToInt(Random.Range(0, boxes.Length));
-                StartCoroutine(SingleSpawn(boxes[index], x, z));
-                yield break;
-            }
-                
-        }
-
-        if(Physics.CheckSphere(newPos, 5, boxLayer))
-        {
-            Destroy(newBox);
-            int index = Mathf.RoundToInt(Random.Range(0, boxes.Length));
-            StartCoroutine(SingleSpawn(boxes[index], x, z));
-            yield break;
-        }
-
-        newBox.transform.position = newPos;
-        positionTaken.Add(newPos);
-
-
-        //Rimuovi dal piano
-        newBox.transform.parent = null;
-        
-        numberOfBoxes += 1;
-        if(numberOfBoxes < maxNumberOfBox)
-        {    
-            int index = Mathf.RoundToInt(Random.Range(0, boxes.Length));
-            StartCoroutine(SingleSpawn(boxes[index], x, z));
-        }
+            int randomIndex = Mathf.RoundToInt(Random.Range(0, boxes.Length));
             
-        
-        yield return null;
+            //Crea l'oggetto
+            GameObject newBox = Instantiate(boxes[randomIndex], newPos, Quaternion.Euler(-90,0,0)) as GameObject;
+            numberOfBoxes += 1;
 
-
-    }
-
-    IEnumerator CheckBoxes()
-    {
-        Collider[] colliders = Physics.OverlapBox(centerRing.position, new Vector3(10f,10f,10f), Quaternion.identity, boxLayer);
-        if(colliders.Length <= maxNumberOfBox - 5)
-        {
-            float x_dim = spawnPlane.GetComponent<MeshRenderer>().bounds.size.x;
-            float z_dim = spawnPlane.GetComponent<MeshRenderer>().bounds.size.z;
-            StartCoroutine(SingleSpawn(boxes[Mathf.RoundToInt(Random.Range(0,boxes.Length))], x_dim, z_dim));
         }
+        //INIT
+        if(init){
+            if(numberOfBoxes < maxNumberOfBox)
+                StartCoroutine(CrateSpawn(true, 0));
+        }
+        else //SPAWN GENERICO
+        {
+            if(spawnID != 5)
+                StartCoroutine(CrateSpawn(false, spawnID+1));
+            
+        }
+        
+
         yield return null;
     }
-
+    
     void WumpaSpawn()
     {
 
