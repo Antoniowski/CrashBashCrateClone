@@ -9,6 +9,7 @@ TagManager:
   - Box
   - Floor
   - Enemy
+  - Wumpa
   layers:
   - Default
   - TransparentFX

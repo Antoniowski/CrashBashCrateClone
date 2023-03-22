@@ -17,10 +17,12 @@ public class CrateSceneManager : MonoBehaviour
     [SerializeField] Transform spawnPlane;
     [SerializeField] Transform centerRing;
     [SerializeField] GameObject[] boxes;
+    [SerializeField] GameObject wumpa;
 
     float spawnPlane_xDim;
     float spawnPlane_zDim;
-    float timer;
+    float boxTimer;
+    float wumpaTimer;
 
 
     [Header("Match Options")]
@@ -51,11 +53,19 @@ public class CrateSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if(timer > 6f)
+        boxTimer += Time.deltaTime;
+        wumpaTimer += Time.deltaTime;
+
+        if(boxTimer > 6f)
         {
-            timer = 0;
+            boxTimer = 0;
             StartCoroutine(CrateSpawn(false, 0));
+        }
+
+        if(wumpaTimer > 10f)
+        {
+            wumpaTimer = 0;
+            StartCoroutine(WumpaSpawn(0));
         }
     }
 
@@ -116,8 +126,28 @@ public class CrateSceneManager : MonoBehaviour
         yield return null;
     }
     
-    void WumpaSpawn()
+    IEnumerator WumpaSpawn(int spawnID)
     {
+                //Randomizza la posizione
+        float random_x = Random.Range(-spawnPlane_xDim, spawnPlane_xDim);
+        float random_z = Random.Range(-spawnPlane_zDim, spawnPlane_zDim);
+        random_z = random_x > random_z ? Random.Range(0, random_z) : Random.Range(0, random_x);
 
+        //Crea nuova posizione
+        //Vector3 newPos = new Vector3(Mathf.RoundToInt(spawnPlane.position.x + random_x*number*noise), 1f, Mathf.RoundToInt(spawnPlane.position.z + random_z*number*noise));
+        Vector3 newPos = new Vector3(spawnPlane.position.x + random_x, 1f, spawnPlane.position.z + random_z);
+
+        //Check se ci sta un'altra scatola
+        if(Physics.OverlapSphere(newPos, 1f, boxLayer.value).Length == 0)
+        {            
+            //Crea l'oggetto
+            GameObject newBox = Instantiate(wumpa, newPos, Quaternion.Euler(0,0,0)) as GameObject;
+        }
+
+        int numberOfWumpa = Mathf.RoundToInt(Random.Range(2, 3));
+        if(spawnID != numberOfWumpa)
+            StartCoroutine(WumpaSpawn(spawnID+1));
+
+        yield return null;
     }
 }

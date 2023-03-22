@@ -408,6 +408,7 @@ MonoBehaviour:
   - {fileID: 1484906789513105357, guid: 0ca79bcafc8fd9041a9dd527512f46ed, type: 3}
   - {fileID: 1484906789513105357, guid: 0ca79bcafc8fd9041a9dd527512f46ed, type: 3}
   - {fileID: 2562431581685473188, guid: 694863a929a1936479faffcc0d7d0c6f, type: 3}
+  wumpa: {fileID: 639064647389069819, guid: 550dbf0b5e3debd47b3e97b881d547dc, type: 3}
   maxNumberOfBox: 12
   boxLayer:
     serializedVersion: 2

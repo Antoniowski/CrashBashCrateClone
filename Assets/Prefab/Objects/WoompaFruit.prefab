@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 258316262509288257}
   - component: {fileID: 2090807522018960562}
   - component: {fileID: 1159683171177992848}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WoompaFruit
-  m_TagString: Untagged
+  m_TagString: Wumpa
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 4643269025424677022}
   - component: {fileID: 5166008092138644125}
   - component: {fileID: 1586230774711852656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 4531306698728471362}
   - component: {fileID: 7272978300702137035}
   - component: {fileID: 279773766420128453}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 2055757305969924449}
   - component: {fileID: 6956036068772680917}
   - component: {fileID: 5488560377321500858}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 1726916678394811804}
   - component: {fileID: 5979927692008280960}
   - component: {fileID: 5490850896772108767}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leaf.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 2268912662967736827}
   - component: {fileID: 3347444811357789359}
   - component: {fileID: 9060707218782173200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leaf.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
