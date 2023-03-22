@@ -3,7 +3,12 @@ guid: 44dcec7251026c24a8aed44cec2d4c73
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mango Material
+    second: {fileID: 2100000, guid: 116ead217aa413341a14c01f10f24e8f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

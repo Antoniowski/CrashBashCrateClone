@@ -57,6 +57,17 @@ public class PlayerManager : GenericCharacterManager
         }
     }
 
+    public void SetCurrentHealth(int value)
+    {
+        if(value > maxHealth)
+        {
+            health = maxHealth;
+            return;
+        }
+        
+        health = value;
+    }
+
     public void StartStunnedAnimation()
     {
         animationHandler.PlayAnimationTarget("Stunned", true);
